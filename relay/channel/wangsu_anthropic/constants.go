@@ -1,0 +1,45 @@
+package wangsu_anthropic
+
+const ChannelName = "wangsu-anthropic"
+
+// ModelList contains the models explicitly marked with the Anthropic
+// /messages endpoint in the Model Store support matrix.
+var ModelList = []string{
+	"qwen-flash",
+	"qwen-plus",
+	"qwen3-vl-plus",
+	"qwen3.5-flash",
+	"qwen3.6-35b-a3b",
+	"qwen3.6-flash",
+	"qwen3.6-plus",
+	"qwen3.7-flash",
+	"qwen3.7-max",
+	"qwen3.7-plus",
+	"qwen3.8-max",
+	"claude-fable-5",
+	"claude-haiku-4-5",
+	"claude-haiku-4-5-20251001",
+	"claude-opus-4-5",
+	"claude-opus-4-5-20251101",
+	"claude-opus-4-6",
+	"claude-opus-4-7",
+	"claude-opus-4-8",
+	"claude-opus-5",
+	"claude-sonnet-4-20250514",
+	"claude-sonnet-4-5",
+	"claude-sonnet-4-5-20250929",
+	"claude-sonnet-4-6",
+	"claude-sonnet-5",
+	"deepseek-v4-flash",
+	"deepseek-v4-flash-0731",
+	"deepseek-v4-pro",
+	"deepseek-v4-pro-0813",
+	"MiniMax-M3",
+	"kimi-k2.5",
+	"kimi-k2.6",
+	"kimi-k2.7-code",
+	"kimi-k3",
+	"glm-5.1",
+	"glm-5.2",
+	"glm-5.3",
+}

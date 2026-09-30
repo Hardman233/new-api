@@ -1,0 +1,3 @@
+services:
+  new-api:
+    image: new-api-local:latest

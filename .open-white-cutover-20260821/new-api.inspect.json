@@ -1,0 +1,335 @@
+[
+    {
+        "Id": "8edd1dd3becbdc9993850bfd74139478fb364515cfe853bb5c5f540c32a3a9af",
+        "Created": "2026-08-20T15:55:10.2064964Z",
+        "Path": "/new-api",
+        "Args": [
+            "--log-dir",
+            "/app/logs"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 195056,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-08-20T15:55:10.308180497Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:1caa3975ef7221f370b27bedebc6678c32d2f26d7d22a90e37c1bbf9a8ab5272",
+        "ResolvConfPath": "/var/lib/docker/containers/8edd1dd3becbdc9993850bfd74139478fb364515cfe853bb5c5f540c32a3a9af/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/8edd1dd3becbdc9993850bfd74139478fb364515cfe853bb5c5f540c32a3a9af/hostname",
+        "HostsPath": "/var/lib/docker/containers/8edd1dd3becbdc9993850bfd74139478fb364515cfe853bb5c5f540c32a3a9af/hosts",
+        "LogPath": "/var/lib/docker/containers/8edd1dd3becbdc9993850bfd74139478fb364515cfe853bb5c5f540c32a3a9af/8edd1dd3becbdc9993850bfd74139478fb364515cfe853bb5c5f540c32a3a9af-json.log",
+        "Name": "/new-api",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "new-api-main_new-api-network",
+            "PortBindings": {
+                "3000/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "3000"
+                    }
+                ],
+                "3001/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "3001"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "always",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                66,
+                198
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/root/new-api-main/data",
+                    "Target": "/data"
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/root/new-api-main/logs",
+                    "Target": "/app/logs"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/root/new-api-main/data",
+                "Destination": "/data",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/root/new-api-main/logs",
+                "Destination": "/app/logs",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "8edd1dd3becb",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3000/tcp": {},
+                "3001/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "AUDIT_LOG_SECRET=",
+                "OPEN_WHITE_NODE_ID=overseas",
+                "GLOBAL_WEB_RATE_LIMIT=2000",
+                "DAILY_BILLING_BACKUP_RUN_ON_STARTUP=false",
+                "REMOTE_AUTH_DEFAULT_GROUP=default",
+                "AUDIT_LOG_RECORD_IP=false",
+                "GENERATED_MEDIA_MAX_DOWNLOAD_MB=1024",
+                "TZ=Asia/Shanghai",
+                "BILLING_SYNC_BATCH_SIZE=100",
+                "DAILY_BILLING_BACKUP_LOOKBACK_DAYS=1",
+                "GLOBAL_API_RATE_LIMIT_DURATION=180",
+                "AUDIT_OSS_KEY_PREFIX=generated-media",
+                "BILLING_SYNC_TARGET_URL=https://ai.ocstudio.cc",
+                "GENERATED_MEDIA_OSS_KEY_PREFIX=generated-media/overseas",
+                "BILLING_SYNC_INTERVAL_SEC=60",
+                "GENERATED_MEDIA_SYNC_UPLOAD_TIMEOUT_SEC=180",
+                "GENERATED_MEDIA_RETURN_OSS_URL=true",
+                "SQL_DSN=postgresql://root:123456@postgres:5432/new-api",
+                "REMOTE_AUTH_ENABLED=true",
+                "DAILY_BILLING_BACKUP_RETENTION_DAYS=0",
+                "BILLING_SYNC_RETRY_BASE_SEC=60",
+                "GENERATED_MEDIA_UPLOAD_RETRY_DELAY_MS=1000",
+                "REMOTE_AUTH_TIMEOUT_SEC=5",
+                "AUDIT_OSS_FORCE_PATH_STYLE=false",
+                "SERVER_BILLING_CURRENCY=USD",
+                "GENERATED_MEDIA_OSS_ENABLED=true",
+                "REMOTE_AUTH_BASE_URL=https://ai.ocstudio.cc",
+                "OPEN_WHITE_INTERNAL_KEY=P3QfAy14TkgNRkmwMsgqwhfTs5frsKVm",
+                "OPEN_WHITE_PEERS=[{\"node_id\":\"cn\",\"region\":\"cn\",\"base_url\":\"https://ai.ocstudio.cc\"}]",
+                "AUDIT_LOG_RETENTION_DAYS=7",
+                "DAILY_BILLING_BACKUP_DIR=/data/billing-backups",
+                "ERROR_LOG_ENABLED=true",
+                "GENERATED_MEDIA_UPLOAD_URL_MODE=download_and_reupload",
+                "BILLING_CNY_REFERENCE_ENABLED=true",
+                "EXCHANGE_RATE_TARGET=CNY",
+                "NODE_TYPE=master",
+                "INTERNAL_API_KEY=P3QfAy14TkgNRkmwMsgqwhfTs5frsKVm",
+                "AUDIT_OSS_SECRET_KEY=WmpjM056QmlOak5oTUdGaU5EaG1aamxrT1RZM1lUZzVOVE0zT0RBMlptWQ==",
+                "GENERATED_MEDIA_UPLOAD_ATTEMPT_TIMEOUT_SEC=600",
+                "AUDIT_OSS_BUCKET=ocstudio-hongkong",
+                "REDIS_CONN_STRING=redis://:123456@redis:6379",
+                "REMOTE_AUTH_SYNC_GROUP=false",
+                "NODE_NAME=new-api-node-1",
+                "AUDIT_OSS_REGION=cn-hongkong",
+                "SERVER_NODE_NAME=overseas-1",
+                "DAILY_BILLING_BACKUP_ENABLED=true",
+                "BILLING_SYNC_ENABLED=true",
+                "GENERATED_MEDIA_PUBLIC_BASE_URL=https://hongkongtos.ocstudio.cc",
+                "AUDIT_LOG_ENABLED=true",
+                "GENERATED_MEDIA_WORKERS=8",
+                "GENERATED_MEDIA_CAPTURE_MAX_MB=64",
+                "OPEN_WHITE_REGION=overseas",
+                "LOG_SQL_DSN=postgresql://root:123456@postgres:5432/new-api",
+                "EXCHANGE_RATE_PROVIDER_URL=https://hq.sinajs.cn/list=fx_susdcny",
+                "AUDIT_OSS_ACCESS_KEY=AKLTNDc2MGRhZmQzYjc3NDNiN2IyZGUwM2E1MjNhZWY5ZDQ",
+                "GENERATED_MEDIA_QUEUE_SIZE=1000",
+                "REMOTE_AUTH_SYNC_ROLE=false",
+                "REMOTE_AUTH_API_KEY=41a2f510c5ad1175ac77eba787f9079b17e722099db4cb2430cee650bf169f31",
+                "BATCH_UPDATE_ENABLED=true",
+                "SERVER_REGION=overseas",
+                "AUDIT_OSS_ENDPOINT=https://tos-s3-cn-hongkong.volces.com",
+                "GENERATED_MEDIA_CAPTURE_WORKERS=2",
+                "REMOTE_AUTH_INITIAL_QUOTA=0",
+                "GENERATED_MEDIA_UPLOAD_RETRY_COUNT=1",
+                "EXCHANGE_RATE_HTTP_TIMEOUT_SEC=5",
+                "BILLING_SYNC_API_KEY=P3QfAy14TkgNRkmwMsgqwhfTs5frsKVm",
+                "AUDIT_QUERY_API_KEY=d7711f843634d7535cede06d19816d3f0f2520b7f39c6dd09528e7c35027f034",
+                "EXCHANGE_RATE_REFRESH_INTERVAL_SEC=600",
+                "BILLING_SYNC_HTTP_TIMEOUT_SEC=10",
+                "DAILY_BILLING_BACKUP_RUN_AT=00:15",
+                "GLOBAL_API_RATE_LIMIT=1000",
+                "GLOBAL_WEB_RATE_LIMIT_DURATION=180",
+                "GENERATED_MEDIA_UPLOAD_PROGRESS_LOG_INTERVAL_SEC=10",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "--log-dir",
+                "/app/logs"
+            ],
+            "Image": "new-api-local:doubao-video-channel54-overseas-20260820_234255",
+            "Volumes": null,
+            "WorkingDir": "/data",
+            "Entrypoint": [
+                "/new-api"
+            ],
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "SandboxID": "80906eaf5cc6edffb3de38f6f094c604edb5dc04a573c1b876bdca1c431a3483",
+            "SandboxKey": "/var/run/docker/netns/80906eaf5cc6",
+            "Ports": {
+                "3000/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "3000"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "3000"
+                    }
+                ],
+                "3001/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "3001"
+                    }
+                ]
+            },
+            "Networks": {
+                "new-api-main_new-api-network": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "8f0d948657d796ad81045c19821a7bb2e17d57e71f26b0f1117d7fa3f6af5162",
+                    "EndpointID": "0630652857a61f70588a35e52031efdd42c19ff73f29348bb05d5c3f26e08589",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "MacAddress": "1a:66:c7:af:30:ea",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "new-api",
+                        "8edd1dd3becb"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:fc19d3bcc6d62e909b287fa23d64480292e89857071c2c3b4927271f0dd0b996",
+            "size": 1244,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

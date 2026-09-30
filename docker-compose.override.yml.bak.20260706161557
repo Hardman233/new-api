@@ -1,0 +1,15 @@
+services:
+  new-api:
+    image: new-api-local:latest
+    env_file:
+      - .env
+    environment:
+      SQL_DSN: "postgresql://root:123456@115.159.50.134:5432/new-api"
+      LOG_SQL_DSN: ""
+      NODE_TYPE: slave
+      SERVER_REGION: overseas
+      SERVER_BILLING_CURRENCY: USD
+      BILLING_CNY_REFERENCE_ENABLED: "true"
+      AUDIT_QUERY_API_KEY: ${AUDIT_QUERY_API_KEY}
+    depends_on:
+      - redis

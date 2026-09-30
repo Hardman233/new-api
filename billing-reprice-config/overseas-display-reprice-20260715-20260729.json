@@ -1,0 +1,32 @@
+{
+  "batch_id": "overseas-display-reprice-20260715-20260729-1900-v1",
+  "server_region": "overseas",
+  "currency": "USD",
+  "start": 1784044800,
+  "before": 1785322800,
+  "apply_guard": {
+    "backup_ledger_table": "billing_ledger_bak_20260729_1900_v1",
+    "backup_outbox_table": "billing_outbox_bak_20260729_1900_v1",
+    "expected_rows": 6794,
+    "expected_outbox_rows": 6794,
+    "expected_old_quota": 166696835,
+    "expected_old_amount": "333.39367000",
+    "expected_new_quota": 171120290,
+    "expected_new_amount": "342.24058000"
+  },
+  "targets": [
+    {"channel_id": 3, "user_group": "网宿GPT5.5", "model_name": "gpt-5.5", "group_ratio": 0.848},
+    {"channel_id": 4, "user_group": "网宿Gemini", "model_name": "gemini-2.5-flash-image", "group_ratio": 0.848},
+    {"channel_id": 4, "user_group": "网宿Gemini", "model_name": "gemini-3.1-flash-image-preview", "group_ratio": 0.848},
+    {"channel_id": 4, "user_group": "网宿Gemini", "model_name": "gemini-3.1-pro-preview", "group_ratio": 0.848},
+    {"channel_id": 4, "user_group": "网宿Gemini", "model_name": "gemini-3-pro-image-preview", "group_ratio": 0.848},
+    {"channel_id": 6, "user_group": "网宿CC", "model_name": "claude-haiku-4-5-20251001", "group_ratio": 0.9859},
+    {"channel_id": 6, "user_group": "网宿CC", "model_name": "claude-opus-4-6", "group_ratio": 0.9859},
+    {"channel_id": 10, "user_group": "网宿Image2图像生成", "model_name": "gpt-image-2", "group_ratio": 0.848},
+    {"channel_id": 14, "user_group": "浩然GPT5.6", "model_name": "gpt-5.6-luna", "group_ratio": 0.35},
+    {"channel_id": 14, "user_group": "浩然GPT5.6", "model_name": "gpt-5.6-terra", "group_ratio": 0.35},
+    {"channel_id": 15, "user_group": "网宿GPT5.6", "model_name": "gpt-5.6-luna", "group_ratio": 0.848},
+    {"channel_id": 15, "user_group": "网宿GPT5.6", "model_name": "gpt-5.6-sol", "group_ratio": 0.848},
+    {"channel_id": 15, "user_group": "网宿GPT5.6", "model_name": "gpt-5.6-terra", "group_ratio": 0.848}
+  ]
+}

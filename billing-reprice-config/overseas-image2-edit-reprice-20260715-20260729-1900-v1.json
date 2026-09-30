@@ -1,0 +1,25 @@
+{
+  "batch_id": "overseas-image2-edit-reprice-20260715-20260729-1900-v1",
+  "server_region": "overseas",
+  "currency": "USD",
+  "start": 1784044800,
+  "before": 1785322800,
+  "targets": [
+    {
+      "channel_id": 12,
+      "user_group": "网宿image2图像编辑",
+      "model_name": "gpt-image-2",
+      "group_ratio": 0.848
+    }
+  ],
+  "apply_guard": {
+    "backup_ledger_table": "billing_ledger_bak_image2_edit_20260729_1900_v1",
+    "backup_outbox_table": "billing_outbox_bak_image2_edit_20260729_1900_v1",
+    "expected_rows": 9576,
+    "expected_outbox_rows": 9576,
+    "expected_old_quota": 521678800,
+    "expected_old_amount": "1043.35760000",
+    "expected_new_quota": 550382178,
+    "expected_new_amount": "1100.76435600"
+  }
+}

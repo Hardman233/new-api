@@ -1,0 +1,16 @@
+seedance-4k-resolution-hotfix-20260716_0916
+
+Purpose:
+- Allow Seedance SD2 requests to pass resolution=4K/4k through local validation.
+- Covers both top-level resolution and metadata.resolution normalization to 4k.
+
+Changed files:
+- relay/channel/task/doubao/adaptor.go
+- relay/channel/task/doubao/adaptor_test.go
+
+Verification:
+- go test ./relay/channel/task/doubao -run "SeedanceAllows4KResolution|ValidateSeedanceRequestPayload|ConvertToRequestPayload|Seedance|Billing" -count=1 -v
+
+Expected online behavior after deploy:
+- POST /v1/videos with metadata.resolution=4K should no longer return local error: resolution must be one of 480p, 720p, 1080p.
+- tiered_expr can then match 4k_no_video_input or 4k_video_input.
