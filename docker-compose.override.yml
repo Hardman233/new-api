@@ -1,6 +1,6 @@
 services:
   new-api:
-    image: new-api-local:latest
+    image: new-api-old:local
     environment:
       GLOBAL_API_RATE_LIMIT: "1000"
       GLOBAL_API_RATE_LIMIT_DURATION: "180"

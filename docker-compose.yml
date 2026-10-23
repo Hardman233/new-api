@@ -16,10 +16,10 @@ version: '3.4' # For compatibility with older Docker versions
 
 services:
   new-api:
-    image: new-api-local:latest
+    image: new-api-old:local
     env_file:
       - .env
-    container_name: new-api
+    container_name: new-api-old
     restart: always
     command: --log-dir /app/logs
     ports:
@@ -91,7 +91,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis
+    container_name: redis-newapi
     restart: always
     command: ["redis-server", "--requirepass", "123456"]  # ⚠️ IMPORTANT: Change this password in production!
     networks:
@@ -99,7 +99,7 @@ services:
 
   postgres:
     image: postgres:15
-    container_name: postgres
+    container_name: postgres-newapi
     restart: always
     environment:
       POSTGRES_USER: root
@@ -109,8 +109,8 @@ services:
       - pg_data:/var/lib/postgresql/data
     networks:
       - new-api-network
-#    ports:
-#      - "5432:5432"  # Uncomment if you need to access PostgreSQL from outside Docker
+    ports:
+      - "0.0.0.0:5432:5432"  # Uncomment if you need to access PostgreSQL from outside Docker
 
 #  mysql:
 #    image: mysql:8.2
