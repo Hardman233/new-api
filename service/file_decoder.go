@@ -33,13 +33,8 @@ func GetFileTypeFromUrl(c *gin.Context, url string, reason ...string) (string, e
 		return "", fmt.Errorf("failed to download file, status code: %d", response.StatusCode)
 	}
 
-	if headerType := strings.TrimSpace(response.Header.Get("Content-Type")); headerType != "" {
-		if i := strings.Index(headerType, ";"); i != -1 {
-			headerType = headerType[:i]
-		}
-		if headerType != "application/octet-stream" {
-			return headerType, nil
-		}
+	if headerType := mediaTypeFromHeader(response.Header.Get("Content-Type")); headerType != "" && !isGenericBinaryMime(headerType) {
+		return headerType, nil
 	}
 
 	if cd := response.Header.Get("Content-Disposition"); cd != "" {
@@ -99,8 +94,12 @@ func GetFileTypeFromUrl(c *gin.Context, url string, reason ...string) (string, e
 			continue
 		}
 
+		if detected := detectImageMime(readData); detected != "" {
+			return detected, nil
+		}
+
 		sniffed := http.DetectContentType(readData)
-		if sniffed != "" && sniffed != "application/octet-stream" {
+		if sniffed != "" && sniffed != "application/octet-stream" && sniffed != "binary/octet-stream" {
 			return sniffed, nil
 		}
 

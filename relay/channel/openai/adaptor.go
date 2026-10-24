@@ -1024,7 +1024,7 @@ func normalizeDownloadedImageContentType(raw string, data []byte) string {
 		contentType = parsed
 	}
 	contentType = strings.ToLower(strings.TrimSpace(contentType))
-	if contentType == "" || contentType == "application/octet-stream" {
+	if contentType == "" || contentType == "application/octet-stream" || contentType == "binary/octet-stream" {
 		contentType = strings.ToLower(http.DetectContentType(data))
 	}
 	return contentType

@@ -8,11 +8,16 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/dto"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	"github.com/QuantumNous/new-api/service"
 )
 
 func applyOpenAIChannelGeminiImageCompat(request *dto.GeneralOpenAIRequest, info *relaycommon.RelayInfo) error {
 	if request == nil || !isOpenAIChannelGeminiImageModel(request, info) {
 		return nil
+	}
+	// 网宿会自己拉取 image_url。TOS 上的 webp 常返回 binary/octet-stream，需先在本地识别后再内联。
+	if err := inlineRemoteGeminiImageURLs(request); err != nil {
+		return err
 	}
 
 	allowHalfK := openAIChannelGeminiAllowsHalfK(request, info)
@@ -67,6 +72,40 @@ func applyOpenAIChannelGeminiImageCompat(request *dto.GeneralOpenAIRequest, info
 		return fmt.Errorf("marshal generationConfig: %w", err)
 	}
 	request.GenerationConfig = data
+	return nil
+}
+
+func inlineRemoteGeminiImageURLs(request *dto.GeneralOpenAIRequest) error {
+	for i := range request.Messages {
+		message := &request.Messages[i]
+		parts := message.ParseContent()
+		changed := false
+		for j := range parts {
+			if parts[j].Type != dto.ContentTypeImageURL {
+				continue
+			}
+			image := parts[j].GetImageMedia()
+			if image == nil {
+				continue
+			}
+			rawURL := strings.TrimSpace(image.Url)
+			if !strings.HasPrefix(rawURL, "http://") && !strings.HasPrefix(rawURL, "https://") {
+				continue
+			}
+			mimeType, data, err := service.GetImageFromUrl(rawURL)
+			if err != nil {
+				return err
+			}
+			parts[j].ImageUrl = &dto.MessageImageUrl{
+				Url:    "data:" + mimeType + ";base64," + data,
+				Detail: image.Detail,
+			}
+			changed = true
+		}
+		if changed {
+			message.SetMediaContent(parts)
+		}
+	}
 	return nil
 }
 

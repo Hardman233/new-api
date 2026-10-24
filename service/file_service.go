@@ -186,8 +186,13 @@ func loadFromURL(c *gin.Context, url string, reason ...string) (*types.CachedFil
 	// 转换为 base64
 	base64Data := base64.StdEncoding.EncodeToString(fileBytes)
 
-	// 智能获取 MIME 类型
+	// 智能获取 MIME 类型。generic binary 不能原样传给 Gemini。
 	mimeType := smartDetectMimeType(resp, url, fileBytes)
+	if isGenericBinaryMime(mimeType) {
+		if detected := detectImageMime(fileBytes); detected != "" {
+			mimeType = detected
+		}
+	}
 
 	// 判断是否使用磁盘缓存
 	base64Size := int64(len(base64Data))
@@ -216,8 +221,8 @@ func loadFromURL(c *gin.Context, url string, reason ...string) (*types.CachedFil
 		cachedData = types.NewMemoryCachedData(base64Data, mimeType, int64(len(fileBytes)))
 	}
 
-	// 如果是图片，尝试获取图片配置
-	if strings.HasPrefix(mimeType, "image/") {
+	// 如果是图片，尝试获取图片配置。generic binary 也要解码，避免把 binary/octet-stream 传给 Gemini。
+	if strings.HasPrefix(mimeType, "image/") || isGenericBinaryMime(mimeType) {
 		if common.DebugEnabled {
 			logger.LogDebug(c, "loadFromURL: decoding image config")
 		}
@@ -225,10 +230,11 @@ func loadFromURL(c *gin.Context, url string, reason ...string) (*types.CachedFil
 		if err == nil {
 			cachedData.ImageConfig = &config
 			cachedData.ImageFormat = format
-			// 如果通过图片解码获取了更准确的格式，更新 MIME 类型
-			if mimeType == "application/octet-stream" || mimeType == "" {
+			if isGenericBinaryMime(mimeType) && format != "" {
 				cachedData.MimeType = "image/" + format
 			}
+		} else if detected := detectImageMime(fileBytes); detected != "" {
+			cachedData.MimeType = detected
 		}
 	}
 
@@ -247,12 +253,13 @@ func writeToDiskCache(base64Data string) (string, error) {
 
 // smartDetectMimeType 智能检测 MIME 类型
 func smartDetectMimeType(resp *http.Response, url string, fileBytes []byte) string {
-	// 1. 尝试从 Content-Type header 获取
-	mimeType := resp.Header.Get("Content-Type")
-	if idx := strings.Index(mimeType, ";"); idx != -1 {
-		mimeType = strings.TrimSpace(mimeType[:idx])
-	}
-	if mimeType != "" && mimeType != "application/octet-stream" {
+	// 1. 尝试从 Content-Type header 获取。binary/octet-stream 与空类型继续用文件头识别。
+	mimeType := mediaTypeFromHeader(resp.Header.Get("Content-Type"))
+	if isGenericBinaryMime(mimeType) {
+		if detected := detectImageMime(fileBytes); detected != "" {
+			return detected
+		}
+	} else if mimeType != "" {
 		return mimeType
 	}
 
@@ -435,7 +442,7 @@ func GetMimeType(c *gin.Context, source types.FileSource) (string, error) {
 
 	if urlSource, ok := source.(*types.URLSource); ok {
 		mimeType, err := GetFileTypeFromUrl(c, urlSource.URL, "get_mime_type")
-		if err == nil && mimeType != "" && mimeType != "application/octet-stream" {
+		if err == nil && mimeType != "" && !isGenericBinaryMime(mimeType) {
 			return mimeType, nil
 		}
 	}

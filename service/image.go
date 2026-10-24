@@ -78,10 +78,6 @@ func GetImageFromUrl(url string) (mimeType string, data string, err error) {
 		return "", "", fmt.Errorf("failed to download image: HTTP %d", resp.StatusCode)
 	}
 
-	contentType := resp.Header.Get("Content-Type")
-	if contentType != "application/octet-stream" && !strings.HasPrefix(contentType, "image/") {
-		return "", "", fmt.Errorf("invalid content type: %s, required image/*", contentType)
-	}
 	maxImageSize := int64(constant.MaxFileDownloadMB * 1024 * 1024)
 
 	// Check Content-Length if available
@@ -101,18 +97,22 @@ func GetImageFromUrl(url string) (mimeType string, data string, err error) {
 		return "", "", fmt.Errorf("image size exceeds maximum allowed size of %d bytes", maxImageSize)
 	}
 
-	data = base64.StdEncoding.EncodeToString(buffer.Bytes())
-	mimeType = contentType
-
-	// Handle application/octet-stream type
-	if mimeType == "application/octet-stream" {
-		_, format, _, err := DecodeBase64ImageData(data)
-		if err != nil {
-			return "", "", err
+	body := buffer.Bytes()
+	mediaType := mediaTypeFromHeader(resp.Header.Get("Content-Type"))
+	if isGenericBinaryMime(mediaType) {
+		mediaType = detectImageMime(body)
+		if mediaType == "" {
+			if _, format, _, decodeErr := DecodeBase64ImageData(base64.StdEncoding.EncodeToString(body)); decodeErr == nil && format != "" {
+				mediaType = "image/" + format
+			}
 		}
-		mimeType = "image/" + format
+	}
+	if !strings.HasPrefix(mediaType, "image/") {
+		return "", "", fmt.Errorf("get image from %s failed: error content-type: %s", url, resp.Header.Get("Content-Type"))
 	}
 
+	data = base64.StdEncoding.EncodeToString(body)
+	mimeType = mediaType
 	return mimeType, data, nil
 }
 
@@ -129,10 +129,9 @@ func DecodeUrlImageData(imageUrl string) (image.Config, string, error) {
 		return image.Config{}, "", err
 	}
 
-	mimeType := response.Header.Get("Content-Type")
-
-	if mimeType != "application/octet-stream" && !strings.HasPrefix(mimeType, "image/") {
-		return image.Config{}, "", fmt.Errorf("invalid content type: %s, required image/*", mimeType)
+	mediaType := mediaTypeFromHeader(response.Header.Get("Content-Type"))
+	if !isGenericBinaryMime(mediaType) && !strings.HasPrefix(mediaType, "image/") {
+		return image.Config{}, "", fmt.Errorf("get image from %s failed: error content-type: %s", imageUrl, response.Header.Get("Content-Type"))
 	}
 
 	var readData []byte
@@ -156,6 +155,42 @@ func DecodeUrlImageData(imageUrl string) (image.Config, string, error) {
 	}
 
 	return image.Config{}, "", err // 返回最后一个错误
+}
+
+func mediaTypeFromHeader(header string) string {
+	mediaType := strings.ToLower(strings.TrimSpace(header))
+	if i := strings.Index(mediaType, ";"); i != -1 {
+		mediaType = strings.TrimSpace(mediaType[:i])
+	}
+	return mediaType
+}
+
+func isGenericBinaryMime(mediaType string) bool {
+	switch mediaType {
+	case "", "application/octet-stream", "binary/octet-stream":
+		return true
+	default:
+		return false
+	}
+}
+
+func detectImageMime(data []byte) string {
+	if len(data) >= 3 && data[0] == 0xFF && data[1] == 0xD8 && data[2] == 0xFF {
+		return "image/jpeg"
+	}
+	if len(data) >= 8 && bytes.Equal(data[:8], []byte{0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A}) {
+		return "image/png"
+	}
+	if len(data) >= 6 && (bytes.HasPrefix(data, []byte("GIF87a")) || bytes.HasPrefix(data, []byte("GIF89a"))) {
+		return "image/gif"
+	}
+	if len(data) >= 12 && bytes.Equal(data[:4], []byte("RIFF")) && bytes.Equal(data[8:12], []byte("WEBP")) {
+		return "image/webp"
+	}
+	if sniffed := mediaTypeFromHeader(http.DetectContentType(data)); strings.HasPrefix(sniffed, "image/") {
+		return sniffed
+	}
+	return ""
 }
 
 func getImageConfig(reader io.Reader) (image.Config, string, error) {
